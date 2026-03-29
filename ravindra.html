@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ravindra Phonex</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #0f172a;
+      color: #e2e8f0;
+    }
+
+    header {
+      background: #020617;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      text-align: center;
+      padding: 10px;
+      background: #020617;
+    }
+
+    nav a, .dropbtn {
+      margin: 0 15px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      display: inline-block;
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #1e293b;
+      min-width: 150px;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 10px;
+      color: white;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .section {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    h3 {
+      color: #38bdf8;
+    }
+
+    /* Spinner */
+    .spinner {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #38bdf8;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Ravindra Phonex</h1>
+</header>
+
+<nav>
+  <a href="#books">Books</a>
+
+  <div class="dropdown">
+    <span class="dropbtn">Movies ▼</span>
+    <div class="dropdown-content">
+      <a href="#" onclick="loadCategory('english')">English</a>
+      <a href="#" onclick="loadCategory('hindi')">Hindi</a>
+      <a href="#" onclick="loadCategory('telugu')">Telugu</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Search Bar -->
+<div style="text-align:center; padding:20px;">
+  <input type="text" id="searchInput" placeholder="Search movie..." style="padding:10px; width:250px;">
+  <button onclick="searchMovie()" style="padding:10px;">Search</button>
+  <button onclick="clearSearch()" style="padding:10px;">Clear</button>
+</div>
+
+<!-- Search Result -->
+<section id="search" class="section">
+  <h2>🔍 Search Result</h2>
+  <div class="cards" id="search-list"></div>
+</section>
+
+<!-- English -->
+<section id="english" class="section">
+  <h2>English Movies</h2>
+  <div class="cards" id="english-list"></div>
+</section>
+
+<!-- Hindi -->
+<section id="hindi" class="section">
+  <h2>Hindi Movies</h2>
+  <div class="cards" id="hindi-list"></div>
+</section>
+
+<!-- Telugu -->
+<section id="telugu" class="section">
+  <h2>Telugu Movies</h2>
+  <div class="cards" id="telugu-list"></div>
+</section>
+
+<!-- Books -->
+<section id="books" class="section">
+  <h2>📚 Books</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>The Alchemist</h3>
+      <p>⭐⭐⭐⭐⭐</p>
+      <p>A journey of dreams.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+function loadCategory(category) {
+  const section = document.getElementById(category);
+  section.scrollIntoView({ behavior: 'smooth' });
+
+  if (section.dataset.loaded) return;
+
+  const movies = {
+    english: ["Inception", "Interstellar"],
+    hindi: ["3 Idiots", "Dangal"],
+    telugu: ["RRR", "Baahubali"]
+  };
+
+  const container = document.getElementById(category + "-list");
+
+  // Spinner
+  container.innerHTML = "<div class='spinner'></div>";
+
+  let count = 0;
+
+  movies[category].forEach((movie, i) => {
+    const cbName = "callback_" + category + "_" + i;
+
+    window[cbName] = function(data) {
+      if (data && data.Response === "True") {
+        container.innerHTML += `
+          <div class="card">
+            <h3>${data.Title}</h3>
+            <p><strong>IMDb:</strong> ${data.imdbRating}</p>
+            <p>${data.Plot}</p>
+          </div>
+        `;
+      }
+
+      count++;
+
+      if (count === movies[category].length) {
+        const spinner = container.querySelector('.spinner');
+        if (spinner) spinner.remove();
+      }
+    };
+
+    const script = document.createElement("script");
+    script.src = `https://www.omdbapi.com/?t=${encodeURIComponent(movie)}&apikey=aa1237e2&callback=${cbName}`;
+    document.body.appendChild(script);
+  });
+
+  section.dataset.loaded = true;
+}
+
+
+function searchMovie() {
+  const movie = document.getElementById("searchInput").value.trim();
+  const container = document.getElementById("search-list");
+
+  if (!movie) return;
+
+  container.innerHTML = "<div class='spinner'></div>";
+
+  // unique callback
+  const cbName = "search_cb_" + Date.now();
+
+  window[cbName] = function(data) {
+    if (data && data.Response === "True") {
+      container.innerHTML = `
+        <div class="card">
+          <img src="${data.Poster}" style="width:100%; border-radius:10px;" />
+          <h3>${data.Title}</h3>
+          <p><strong>IMDb:</strong> ${data.imdbRating}</p>
+          <p><strong>Actors:</strong> ${data.Actors}</p>
+          <p>${data.Plot}</p>
+        </div>
+      `;
+    } else {
+      container.innerHTML = "Movie not found ❌";
+    }
+
+    delete window[cbName];
+  };
+
+  const script = document.createElement("script");
+  script.src = `https://www.omdbapi.com/?t=${encodeURIComponent(movie)}&apikey=aa1237e2&callback=${cbName}`;
+  document.body.appendChild(script);
+
+  document.getElementById("search").scrollIntoView({ behavior: 'smooth' });
+}
+
+
+
+function clearSearch() {
+  document.getElementById("searchInput").value = "";
+  document.getElementById("search-list").innerHTML = "";
+}
+
+// Optional: ESC key to clear
+const input = document.getElementById("searchInput");
+if (input) {
+  input.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") {
+      clearSearch();
+    }
+  });
+}
+
+</script>
+
+</body>
+</html>
