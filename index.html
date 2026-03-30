@@ -88,12 +88,7 @@ body { margin:0; font-family: Arial, sans-serif; background: linear-gradient(135
   box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
-img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 10px;
-}
+img { display:none; }
 </style>
 </head>
 
@@ -163,7 +158,7 @@ function searchMovie() {
     if (data && data.Response === "True") {
       container.innerHTML = `
         <div class="card">
-          <img src="${data.Poster}" />
+          
           <h3>${data.Title}</h3>
           <p><strong>IMDb:</strong> ${data.imdbRating}</p>
           <p>${data.Plot}</p>
@@ -205,7 +200,7 @@ function loadMovies(lang) {
       if(data && data.Response === "True"){
         container.innerHTML += `
           <div class="card">
-            <img src="${data.Poster}" />
+            
             <h3>${data.Title}</h3>
             <p><strong>IMDb:</strong> ${data.imdbRating}</p>
           </div>
