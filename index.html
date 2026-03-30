@@ -25,7 +25,8 @@ body { margin:0; font-family: Arial, sans-serif; background: linear-gradient(135
 .dropdown { position:relative; }
 .dropdown-content { display:none; position:absolute; background:#ffffff; min-width:150px; top:30px; border:1px solid #ddd; }
 .dropdown-content a { display:block; padding:10px; color:#222; }
-.dropdown:hover .dropdown-content { display:block; }
+.dropdown-content { display:none; }
+.dropdown-content.show { display:block; }
 
 /* Search */
 .search-box { margin-left:auto; }
@@ -51,12 +52,13 @@ img { max-width:100%; border-radius:8px; }
 <div class="navbar">
 
   <div class="dropdown">
-    <a href="#">Movies ▼</a>
-    <div class="dropdown-content">
-      <a href="#">English</a>
-      <a href="#">Hindi</a>
-      <a href="#">Telugu</a>
+    <a href="#" onclick="toggleMenu(event)">Movies ▼</a>
+    <div class="dropdown-content" id="movieMenu">
+      <a href="#" onclick="event.stopPropagation()">English</a>
+      <a href="#" onclick="event.stopPropagation()">Hindi</a>
+      <a href="#" onclick="event.stopPropagation()">Telugu</a>
     </div>
+  </div>
   </div>
 
   <a href="#books">Books</a>
@@ -130,6 +132,21 @@ function clearSearch() {
   document.getElementById("searchInput").value = "";
   document.getElementById("search-list").innerHTML = "";
 }
+
+function toggleMenu(e) {
+  e.preventDefault();
+  const menu = document.getElementById("movieMenu");
+  menu.classList.toggle("show");
+}
+
+// close dropdown when clicking outside
+document.addEventListener("click", function(e) {
+  const menu = document.getElementById("movieMenu");
+  if (!e.target.closest(".dropdown")) {
+    menu.classList.remove("show");
+  }
+});
+
 </script>
 
 </body>
