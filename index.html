@@ -6,118 +6,104 @@
 <title>Ravindra Phonex</title>
 
 <style>
-body { margin:0; font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea, #764ba2); color:#222; }
+body { margin:0; font-family: Arial, sans-serif; background: linear-gradient(135deg,#667eea,#764ba2); }
 
-/* Top Header */
-.header { display:flex; align-items:center; padding:15px 20px; background: linear-gradient(90deg, #ff7e5f, #feb47b); color:white; font-size:28px; font-weight:bold; }
-
-.logo {
-  font-size:28px;
+/* Header */
+.header {
+  padding:15px 20px;
+  background: linear-gradient(90deg,#ff7e5f,#feb47b);
+  color:white;
+  font-size:26px;
   font-weight:bold;
 }
 
 /* Navbar */
-.navbar { display:flex; align-items:center; padding:10px 20px; background: linear-gradient(90deg, #43cea2, #185a9d); color:white; }
+.navbar {
+  display:flex;
+  align-items:center;
+  padding:10px 20px;
+  background: linear-gradient(90deg,#43cea2,#185a9d);
+}
 
 .navbar a {
-  position: relative;
-  color: white;
-  margin-right: 20px;
-  text-decoration: none;
-  font-weight: bold;
-  padding-bottom: 5px;
+  position:relative;
+  color:white;
+  margin-right:20px;
+  text-decoration:none;
+  font-weight:bold;
+  padding-bottom:5px;
 }
 
 /* underline animation */
 .navbar a::after {
-  content: "";
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  left: 0;
-  bottom: 0;
-  background-color: #ffcc00;
-  transition: width 0.3s;
+  content:"";
+  position:absolute;
+  width:0%;
+  height:2px;
+  left:0;
+  bottom:0;
+  background:#ffcc00;
+  transition:0.3s;
 }
 
-.navbar a:hover::after {
-  width: 100%;
-}
+.navbar a:hover::after { width:100%; }
 
 /* Dropdown */
 .dropdown { position:relative; }
 .dropdown-content {
-  display: none;
-  position: absolute;
-  background: #ffffff;
-  min-width: 150px;
-  top: 100%;
-  left: 0;
-  border: 1px solid #ddd;
-  z-index: 1000;
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  background:white;
+  min-width:150px;
+  border-radius:5px;
 }
-
-.dropdown:hover .dropdown-content {
-  display: block;
+.dropdown-content a {
+  display:block;
+  padding:10px;
+  color:black;
 }
-.dropdown-content a { display:block; padding:10px; color:#222; }
-.dropdown-content { display:none; }
-.dropdown-content.show { display:block; }
+.dropdown:hover .dropdown-content { display:block; }
 
 /* Search */
 .search-box { margin-left:auto; }
 .search-box input { padding:6px; }
 .search-box button { padding:6px; }
 
-.section { padding:20px; }
-.card { background:white; padding:15px; border-radius:12px; margin-top:10px; box-shadow:0 4px 10px rgba(0,0,0,0.2); transition: transform 0.2s; }
-.card:hover { transform: scale(1.03); }
+/* Sections */
+.section { padding:20px; color:white; }
+.card {
+  background:white;
+  color:black;
+  padding:15px;
+  border-radius:10px;
+  margin-top:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
 
-img { max-width:100%; border-radius:8px; }
-
-/* Hide any stray links outside navbar */
-a { display: none; }
-.navbar a, .dropdown-content a { display: inline-block; }
-
+img { width:100%; border-radius:10px; }
 </style>
 </head>
 
 <body>
 
-<!-- Header -->
-<div class="header">
-  <div class="logo">Ravindra Phonex</div>
-</div>
+<div class="header">Ravindra Phonex</div>
 
-<!-- Navbar -->
 <div class="navbar">
-
   <div class="dropdown">
     <a href="#">🎬 Movies ▼</a>
     <div class="dropdown-content">
-      <a href="#">English</a>
-      <a href="#">Hindi</a>
-      <a href="#">Telugu</a>
+      <a href="#" onclick="loadMovies('english')">English</a>
+      <a href="#" onclick="loadMovies('hindi')">Hindi</a>
+      <a href="#" onclick="loadMovies('telugu')">Telugu</a>
     </div>
+  </div>
   </div>
 
   <a href="#books">📚 Books</a>
   <a href="#opinion">💬 Opinion</a>
   <a href="#products">🛍️ My Products</a>
-
-  <div class="search-box" style="margin-left:auto;">
-    <input type="text" id="searchInput" placeholder="Search movie">
-    <button onclick="searchMovie()">Search</button>
-    <button onclick="clearSearch()">Clear</button>
-  </div>
-
-</div>
-  </div>
-  </div>
-
-  <a href="#books">Books</a>
-  <a href="#opinion">Opinion</a>
-  <a href="#products">My Products</a>
 
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="Search movie">
@@ -126,25 +112,26 @@ a { display: none; }
   </div>
 </div>
 
-<!-- Search Section -->
+<div class="section" id="movies">
+  <h2>Movies</h2>
+  <div id="movies-list"></div>
+</div>
+
 <div class="section" id="search">
   <h2>Search Results</h2>
   <div id="search-list"></div>
 </div>
 
-<!-- Books -->
 <div class="section" id="books">
   <h2>Books</h2>
   <div class="card">The Alchemist</div>
 </div>
 
-<!-- Opinion -->
 <div class="section" id="opinion">
   <h2>Opinion</h2>
   <div class="card">Share your thoughts...</div>
 </div>
 
-<!-- Products -->
 <div class="section" id="products">
   <h2>My Products</h2>
   <div class="card">Coming soon...</div>
@@ -159,7 +146,7 @@ function searchMovie() {
 
   container.innerHTML = "Loading...";
 
-  const cbName = "search_cb_" + Date.now();
+  const cbName = "search_" + Date.now();
 
   window[cbName] = function(data) {
     if (data && data.Response === "True") {
@@ -187,20 +174,41 @@ function clearSearch() {
   document.getElementById("search-list").innerHTML = "";
 }
 
-function toggleMenu(e) {
-  e.preventDefault();
-  const menu = document.getElementById("movieMenu");
-  menu.classList.toggle("show");
+// Load Movies by Language
+function loadMovies(lang) {
+  const container = document.getElementById("movies-list");
+  container.innerHTML = "Loading...";
+
+  const movieSets = {
+    english: ["Inception","Interstellar","Avatar"],
+    hindi: ["Dangal","3 Idiots","PK"],
+    telugu: ["RRR","Baahubali","Pushpa"]
+  };
+
+  container.innerHTML = "";
+
+  movieSets[lang].forEach((movie,i) => {
+    const cb = "cb_"+lang+i;
+
+    window[cb] = function(data){
+      if(data && data.Response === "True"){
+        container.innerHTML += `
+          <div class="card">
+            <img src="${data.Poster}" />
+            <h3>${data.Title}</h3>
+            <p><strong>IMDb:</strong> ${data.imdbRating}</p>
+          </div>
+        `;
+      }
+    };
+
+    const script = document.createElement("script");
+    script.src = `https://www.omdbapi.com/?t=${encodeURIComponent(movie)}&apikey=aa1237e2&callback=${cb}`;
+    document.body.appendChild(script);
+  });
+
+  document.getElementById("movies").scrollIntoView({behavior:'smooth'});
 }
-
-// close dropdown when clicking outside
-document.addEventListener("click", function(e) {
-  const menu = document.getElementById("movieMenu");
-  if (!e.target.closest(".dropdown")) {
-    menu.classList.remove("show");
-  }
-});
-
 </script>
 
 </body>
