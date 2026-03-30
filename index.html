@@ -8,6 +8,9 @@
 <style>
 body { margin:0; font-family: Arial, sans-serif; background: linear-gradient(135deg,#667eea,#764ba2); }
 
+/* Ensure links show normally */
+a { display:inline-block; }
+
 /* Header */
 .header {
   padding:15px 20px;
@@ -23,6 +26,24 @@ body { margin:0; font-family: Arial, sans-serif; background: linear-gradient(135
   align-items:center;
   padding:10px 20px;
   background: linear-gradient(90deg,#43cea2,#185a9d);
+}
+
+.navbar a {
+  display:inline-flex;
+  align-items:center;
+  margin-right:20px;
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+  position:relative;
+  padding-bottom:5px;
+}
+
+.search-box{
+  margin-left:auto;
+  display:flex;
+  gap:6px;
+  align-items:center;
 }
 
 .navbar > * { flex: 0 0 auto; }
