@@ -65,12 +65,23 @@ img { max-width:100%; border-radius:8px; }
 <div class="navbar">
 
   <div class="dropdown">
-    <a href="#" onclick="toggleMenu(event)">Movies ▼</a>
-    <div class="dropdown-content" id="movieMenu">
-      <a href="#" onclick="event.stopPropagation()">English</a>
-      <a href="#" onclick="event.stopPropagation()">Hindi</a>
-      <a href="#" onclick="event.stopPropagation()">Telugu</a>
+    <a href="#">Movies ▼</a>
+    <div class="dropdown-content">
+      <a href="#">English</a>
+      <a href="#">Hindi</a>
+      <a href="#">Telugu</a>
     </div>
+  </div>
+
+  <a href="#books">Books</a>
+  <a href="#opinion">Opinion</a>
+  <a href="#products">My Products</a>
+
+  <div class="search-box" style="margin-left:auto;">
+    <input type="text" id="searchInput" placeholder="Search movie">
+    <button onclick="searchMovie()">Search</button>
+    <button onclick="clearSearch()">Clear</button>
+  </div>
   </div>
   </div>
 
