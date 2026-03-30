@@ -6,16 +6,10 @@
 <title>Ravindra Phonex</title>
 
 <style>
-body { margin:0; font-family: Arial, sans-serif; background:#0b0b0b; color:white; }
+body { margin:0; font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea, #764ba2); color:#222; }
 
 /* Top Header */
-.header {
-  display:flex;
-  align-items:center;
-  padding:10px 20px;
-  background:black;
-  border-bottom:1px solid #222;
-}
+.header { display:flex; align-items:center; padding:15px 20px; background: linear-gradient(90deg, #ff7e5f, #feb47b); color:white; font-size:28px; font-weight:bold; }
 
 .logo {
   font-size:28px;
@@ -23,34 +17,14 @@ body { margin:0; font-family: Arial, sans-serif; background:#0b0b0b; color:white
 }
 
 /* Navbar */
-.navbar {
-  display:flex;
-  align-items:center;
-  padding:10px 20px;
-  background:#111;
-}
+.navbar { display:flex; align-items:center; padding:10px 20px; background: linear-gradient(90deg, #43cea2, #185a9d); color:white; }
 
-.navbar a {
-  color:white;
-  margin-right:20px;
-  text-decoration:none;
-  font-weight:bold;
-}
+.navbar a { color:white; margin-right:20px; text-decoration:none; font-weight:bold; }
 
 /* Dropdown */
 .dropdown { position:relative; }
-.dropdown-content {
-  display:none;
-  position:absolute;
-  background:#222;
-  min-width:150px;
-  top:30px;
-}
-.dropdown-content a {
-  display:block;
-  padding:10px;
-  color:white;
-}
+.dropdown-content { display:none; position:absolute; background:#ffffff; min-width:150px; top:30px; border:1px solid #ddd; }
+.dropdown-content a { display:block; padding:10px; color:#222; }
 .dropdown:hover .dropdown-content { display:block; }
 
 /* Search */
@@ -59,12 +33,8 @@ body { margin:0; font-family: Arial, sans-serif; background:#0b0b0b; color:white
 .search-box button { padding:6px; }
 
 .section { padding:20px; }
-.card {
-  background:#1e1e1e;
-  padding:15px;
-  border-radius:8px;
-  margin-top:10px;
-}
+.card { background:white; padding:15px; border-radius:12px; margin-top:10px; box-shadow:0 4px 10px rgba(0,0,0,0.2); transition: transform 0.2s; }
+.card:hover { transform: scale(1.03); }
 
 img { max-width:100%; border-radius:8px; }
 </style>
