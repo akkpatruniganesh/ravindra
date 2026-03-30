@@ -19,7 +19,30 @@ body { margin:0; font-family: Arial, sans-serif; background: linear-gradient(135
 /* Navbar */
 .navbar { display:flex; align-items:center; padding:10px 20px; background: linear-gradient(90deg, #43cea2, #185a9d); color:white; }
 
-.navbar a { color:white; margin-right:20px; text-decoration:none; font-weight:bold; }
+.navbar a {
+  position: relative;
+  color: white;
+  margin-right: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+/* underline animation */
+.navbar a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  background-color: #ffcc00;
+  transition: width 0.3s;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
 
 /* Dropdown */
 .dropdown { position:relative; }
@@ -51,6 +74,11 @@ body { margin:0; font-family: Arial, sans-serif; background: linear-gradient(135
 .card:hover { transform: scale(1.03); }
 
 img { max-width:100%; border-radius:8px; }
+
+/* Hide any stray links outside navbar */
+a { display: none; }
+.navbar a, .dropdown-content a { display: inline-block; }
+
 </style>
 </head>
 
@@ -65,7 +93,7 @@ img { max-width:100%; border-radius:8px; }
 <div class="navbar">
 
   <div class="dropdown">
-    <a href="#">Movies ▼</a>
+    <a href="#">🎬 Movies ▼</a>
     <div class="dropdown-content">
       <a href="#">English</a>
       <a href="#">Hindi</a>
@@ -73,15 +101,17 @@ img { max-width:100%; border-radius:8px; }
     </div>
   </div>
 
-  <a href="#books">Books</a>
-  <a href="#opinion">Opinion</a>
-  <a href="#products">My Products</a>
+  <a href="#books">📚 Books</a>
+  <a href="#opinion">💬 Opinion</a>
+  <a href="#products">🛍️ My Products</a>
 
   <div class="search-box" style="margin-left:auto;">
     <input type="text" id="searchInput" placeholder="Search movie">
     <button onclick="searchMovie()">Search</button>
     <button onclick="clearSearch()">Clear</button>
   </div>
+
+</div>
   </div>
   </div>
 
