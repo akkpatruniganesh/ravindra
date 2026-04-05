@@ -7,22 +7,25 @@
 
 <style>
 
+/* GLOBAL */
 body{
 margin:0;
 font-family:Arial;
 background:linear-gradient(135deg,#667eea,#764ba2);
+color:white;
+overflow-x:hidden;
 }
 
-/* header */
+/* HEADER */
 .header{
 padding:15px;
 background:linear-gradient(90deg,#ff7e5f,#feb47b);
-color:white;
 font-size:24px;
 font-weight:bold;
+animation:fadeIn 1s ease-in-out;
 }
 
-/* navbar */
+/* NAVBAR */
 .navbar{
 display:flex;
 align-items:center;
@@ -35,16 +38,35 @@ color:white;
 margin-right:20px;
 text-decoration:none;
 font-weight:bold;
+position:relative;
 cursor:pointer;
 }
 
-/* dropdown */
+/* UNDERLINE HOVER */
+.navbar a::after{
+content:'';
+position:absolute;
+width:0%;
+height:2px;
+background:white;
+left:0;
+bottom:-5px;
+transition:0.3s;
+}
+
+.navbar a:hover::after{
+width:100%;
+}
+
+/* DROPDOWN */
 .dropdown{position:relative;}
 
 .dropdown-content{
 display:none;
 position:absolute;
 background:white;
+border-radius:5px;
+overflow:hidden;
 }
 
 .dropdown-content a{
@@ -55,9 +77,10 @@ color:black;
 
 .dropdown:hover .dropdown-content{
 display:block;
+animation:fadeIn 0.3s ease-in-out;
 }
 
-/* search */
+/* SEARCH */
 .search-box{
 margin-left:auto;
 }
@@ -65,25 +88,64 @@ margin-left:auto;
 .search-box input,
 .search-box button{
 padding:6px;
+border:none;
+border-radius:4px;
 }
 
-/* sections */
+/* HERO */
+.hero{
+text-align:center;
+padding:80px 20px;
+animation:fadeIn 1.2s ease-in-out;
+}
+
+.hero h1{
+font-size:40px;
+}
+
+.hero p{
+opacity:0.9;
+}
+
+.hero button{
+margin-top:15px;
+padding:10px 20px;
+border:none;
+background:#ff7e5f;
+color:white;
+border-radius:5px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.hero button:hover{
+transform:scale(1.1);
+background:#ff5722;
+}
+
+/* SECTIONS */
 .section{
 display:none;
 padding:20px;
-color:white;
+animation:fadeIn 0.5s ease-in-out;
 }
 
-/* cards */
+/* CARDS */
 .card{
 background:white;
 color:black;
 padding:15px;
 border-radius:10px;
 margin-top:10px;
+transition:0.3s;
 }
 
-/* blog layout */
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* BLOG GRID */
 .blog-grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
@@ -95,6 +157,19 @@ background:white;
 color:black;
 padding:15px;
 border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.blog-card:hover{
+transform:scale(1.05);
+box-shadow:0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
 }
 
 </style>
@@ -128,10 +203,19 @@ border-radius:10px;
 
 </div>
 
+<!-- HERO -->
+<div class="hero" id="home">
+<h1>Ravindra’s Living Light</h1>
+<p>A tribute through stories, movies, and knowledge</p>
+
+<button onclick="showSection('blog')">Explore Blog</button>
+<button onclick="showSection('movies')">Explore Movies</button>
+</div>
+
 <!-- MOVIES -->
 <div class="section" id="movies">
 <h2>Movies</h2>
-<div class="card">Movie list will appear here.</div>
+<div class="card">Movie content will appear here</div>
 </div>
 
 <!-- BOOKS -->
@@ -180,12 +264,16 @@ border-radius:10px;
 
 function showSection(sectionId){
 
+document.getElementById("home").style.display="none";
+
 const sections=document.querySelectorAll('.section');
 sections.forEach(sec=>sec.style.display='none');
 
+setTimeout(()=>{
 document.getElementById(sectionId).style.display='block';
+},100);
 
-window.scrollTo(0,120);
+window.scrollTo({top:100, behavior:'smooth'});
 
 }
 
