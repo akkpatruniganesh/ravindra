@@ -12,7 +12,6 @@ body {
   background: linear-gradient(135deg,#667eea,#764ba2);
 }
 
-/* Header */
 .header {
   padding:15px 20px;
   background: linear-gradient(90deg,#ff7e5f,#feb47b);
@@ -21,7 +20,6 @@ body {
   font-weight:bold;
 }
 
-/* Navbar */
 .navbar {
   display:flex;
   align-items:center;
@@ -36,10 +34,7 @@ body {
   font-weight:bold;
 }
 
-/* Dropdown */
-.dropdown {
-  position:relative;
-}
+.dropdown { position:relative; }
 
 .dropdown-content {
   display:none;
@@ -59,7 +54,6 @@ body {
   display:block;
 }
 
-/* Search */
 .search-box {
   margin-left:auto;
 }
@@ -69,7 +63,6 @@ body {
   padding:6px;
 }
 
-/* Sections */
 .section {
   padding:20px;
   color:white;
@@ -141,17 +134,31 @@ body {
   <div class="card">Coming soon...</div>
 </div>
 
-<!-- Blog -->
+<!-- BLOG SECTION -->
 <div class="section" id="blog">
-  <h2>Blog</h2>
-  <div class="card">
-    <h3>My First Blog</h3>
-    <p>This space is dedicated to thoughts, memories, movies, and books inspired by Ravindra & Jyothi.</p>
+  <h2>📝 Blog</h2>
+
+  <!-- Blog Search -->
+  <div style="margin-bottom:15px;">
+    <input type="text" id="blogSearch" placeholder="Search blog..." style="padding:8px; width:250px;">
+    <button onclick="searchBlog()">Search</button>
+    <button onclick="clearBlogSearch()">Clear</button>
   </div>
+
+  <!-- Categories -->
+  <div style="margin-bottom:20px;">
+    <button onclick="loadBlogCategory('movies')">🎬 Movies</button>
+    <button onclick="loadBlogCategory('books')">📚 Books</button>
+    <button onclick="loadBlogCategory('ott')">📺 OTT Reviews</button>
+    <button onclick="loadBlogCategory('motivation')">💡 Motivation</button>
+  </div>
+
+  <!-- Blog Content -->
+  <div id="blog-content"></div>
 </div>
 
 <script>
-// Search Movie
+// MOVIE SEARCH
 function searchMovie() {
   const movie = document.getElementById("searchInput").value.trim();
   const container = document.getElementById("search-list");
@@ -180,13 +187,13 @@ function searchMovie() {
   document.body.appendChild(script);
 }
 
-// Clear Search
+// CLEAR SEARCH
 function clearSearch() {
   document.getElementById("searchInput").value = "";
   document.getElementById("search-list").innerHTML = "";
 }
 
-// Load Movies
+// LOAD MOVIES
 function loadMovies(lang) {
   const container = document.getElementById("movies-list");
 
@@ -217,6 +224,62 @@ function loadMovies(lang) {
   });
 
   document.getElementById("movies").scrollIntoView({behavior:"smooth"});
+}
+
+// BLOG DATA
+const blogData = {
+  movies: [
+    { title: "Inception Review", content: "A masterpiece by Christopher Nolan." },
+    { title: "Interstellar Thoughts", content: "A journey beyond time and space." }
+  ],
+  books: [
+    { title: "The Alchemist", content: "A story about following your dreams." }
+  ],
+  ott: [
+    { title: "Top Netflix Series", content: "Best shows to binge watch." }
+  ],
+  motivation: [
+    { title: "Stay Strong", content: "Life teaches us through experiences." }
+  ]
+};
+
+// LOAD BLOG CATEGORY
+function loadBlogCategory(category) {
+  const container = document.getElementById("blog-content");
+  container.innerHTML = "";
+
+  blogData[category].forEach(post => {
+    container.innerHTML += `
+      <div class="card">
+        <h3>${post.title}</h3>
+        <p>${post.content}</p>
+      </div>
+    `;
+  });
+}
+
+// SEARCH BLOG
+function searchBlog() {
+  const query = document.getElementById("blogSearch").value.toLowerCase();
+  const container = document.getElementById("blog-content");
+  container.innerHTML = "";
+
+  Object.values(blogData).flat().forEach(post => {
+    if (post.title.toLowerCase().includes(query)) {
+      container.innerHTML += `
+        <div class="card">
+          <h3>${post.title}</h3>
+          <p>${post.content}</p>
+        </div>
+      `;
+    }
+  });
+}
+
+// CLEAR BLOG SEARCH
+function clearBlogSearch() {
+  document.getElementById("blogSearch").value = "";
+  document.getElementById("blog-content").innerHTML = "";
 }
 </script>
 
