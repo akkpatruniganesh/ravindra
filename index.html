@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ravindra Phonex</title>
+<title>Ravindra’s Living Light</title>
 
 <style>
-body { margin:0; font-family: Arial, sans-serif; background: linear-gradient(135deg,#667eea,#764ba2); }
-
-/* Ensure links show normally */
-a { display:inline-block; }
+body {
+  margin:0;
+  font-family: Arial;
+  background: linear-gradient(135deg,#667eea,#764ba2);
+}
 
 /* Header */
 .header {
@@ -29,100 +30,64 @@ a { display:inline-block; }
 }
 
 .navbar a {
-  display:inline-flex;
-  align-items:center;
-  margin-right:20px;
-  color:white;
-  text-decoration:none;
-  font-weight:bold;
-  position:relative;
-  padding-bottom:5px;
-}
-
-.search-box{
-  margin-left:auto;
-  display:flex;
-  gap:6px;
-  align-items:center;
-}
-
-.navbar > * { flex: 0 0 auto; }
-
-.search-box {
-  margin-left: auto;
-  display:flex;
-  gap:5px;
-}
-
-.dropdown { display:inline-flex; }
-.navbar a { display:inline-flex; align-items:center; }
-
-.search-box { margin-left:auto; display:flex; gap:5px; }
-
-.navbar a {
-  position:relative;
   color:white;
   margin-right:20px;
   text-decoration:none;
   font-weight:bold;
-  padding-bottom:5px;
 }
-
-/* underline animation */
-.navbar a::after {
-  content:"";
-  position:absolute;
-  width:0%;
-  height:2px;
-  left:0;
-  bottom:0;
-  background:#ffcc00;
-  transition:0.3s;
-}
-
-.navbar a:hover::after { width:100%; }
 
 /* Dropdown */
-.dropdown { position:relative; }
+.dropdown {
+  position:relative;
+}
+
 .dropdown-content {
   display:none;
   position:absolute;
   top:100%;
-  left:0;
   background:white;
   min-width:150px;
-  border-radius:5px;
 }
+
 .dropdown-content a {
   display:block;
   padding:10px;
   color:black;
 }
-.dropdown:hover .dropdown-content { display:block; }
+
+.dropdown:hover .dropdown-content {
+  display:block;
+}
 
 /* Search */
-.search-box { margin-left:auto; }
-.search-box input { padding:6px; }
-.search-box button { padding:6px; }
+.search-box {
+  margin-left:auto;
+}
+
+.search-box input,
+.search-box button {
+  padding:6px;
+}
 
 /* Sections */
-.section { padding:20px; color:white; }
+.section {
+  padding:20px;
+  color:white;
+}
+
 .card {
   background:white;
   color:black;
   padding:15px;
   border-radius:10px;
   margin-top:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
-
-img { display:none; }
 </style>
 </head>
 
 <body>
 
-<div class="header">Ravindra Phonex</div>
+<div class="header">Ravindra’s Living Light</div>
 
 <div class="navbar">
   <div class="dropdown">
@@ -133,11 +98,11 @@ img { display:none; }
       <a href="#" onclick="loadMovies('telugu')">Telugu</a>
     </div>
   </div>
-  </div>
 
   <a href="#books">📚 Books</a>
   <a href="#opinion">💬 Opinion</a>
   <a href="#products">🛍️ My Products</a>
+  <a href="#blog">📝 Blog</a>
 
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="Search movie">
@@ -146,32 +111,47 @@ img { display:none; }
   </div>
 </div>
 
+<!-- Movies -->
 <div class="section" id="movies">
   <h2>Movies</h2>
   <div id="movies-list"></div>
 </div>
 
+<!-- Search -->
 <div class="section" id="search">
   <h2>Search Results</h2>
   <div id="search-list"></div>
 </div>
 
+<!-- Books -->
 <div class="section" id="books">
   <h2>Books</h2>
   <div class="card">The Alchemist</div>
 </div>
 
+<!-- Opinion -->
 <div class="section" id="opinion">
   <h2>Opinion</h2>
   <div class="card">Share your thoughts...</div>
 </div>
 
+<!-- Products -->
 <div class="section" id="products">
   <h2>My Products</h2>
   <div class="card">Coming soon...</div>
 </div>
 
+<!-- Blog -->
+<div class="section" id="blog">
+  <h2>Blog</h2>
+  <div class="card">
+    <h3>My First Blog</h3>
+    <p>This space is dedicated to thoughts, memories, movies, and books inspired by Ravindra & Jyothi.</p>
+  </div>
+</div>
+
 <script>
+// Search Movie
 function searchMovie() {
   const movie = document.getElementById("searchInput").value.trim();
   const container = document.getElementById("search-list");
@@ -180,40 +160,37 @@ function searchMovie() {
 
   container.innerHTML = "Loading...";
 
-  const cbName = "search_" + Date.now();
+  const cb = "search_" + Date.now();
 
-  window[cbName] = function(data) {
+  window[cb] = function(data) {
     if (data && data.Response === "True") {
       container.innerHTML = `
         <div class="card">
-          
           <h3>${data.Title}</h3>
           <p><strong>IMDb:</strong> ${data.imdbRating}</p>
           <p>${data.Plot}</p>
-        </div>
-      `;
+        </div>`;
     } else {
       container.innerHTML = "Movie not found ❌";
     }
-    delete window[cbName];
   };
 
   const script = document.createElement("script");
-  script.src = `https://www.omdbapi.com/?t=${encodeURIComponent(movie)}&apikey=aa1237e2&callback=${cbName}`;
+  script.src = `https://www.omdbapi.com/?t=${movie}&apikey=aa1237e2&callback=${cb}`;
   document.body.appendChild(script);
 }
 
+// Clear Search
 function clearSearch() {
   document.getElementById("searchInput").value = "";
   document.getElementById("search-list").innerHTML = "";
 }
 
-// Load Movies by Language
+// Load Movies
 function loadMovies(lang) {
   const container = document.getElementById("movies-list");
-  container.innerHTML = "Loading...";
 
-  const movieSets = {
+  const movies = {
     english: ["Inception","Interstellar","Avatar"],
     hindi: ["Dangal","3 Idiots","PK"],
     telugu: ["RRR","Baahubali","Pushpa"]
@@ -221,27 +198,25 @@ function loadMovies(lang) {
 
   container.innerHTML = "";
 
-  movieSets[lang].forEach((movie,i) => {
+  movies[lang].forEach((m,i)=>{
     const cb = "cb_"+lang+i;
 
     window[cb] = function(data){
-      if(data && data.Response === "True"){
+      if(data && data.Response==="True"){
         container.innerHTML += `
           <div class="card">
-            
             <h3>${data.Title}</h3>
             <p><strong>IMDb:</strong> ${data.imdbRating}</p>
-          </div>
-        `;
+          </div>`;
       }
     };
 
     const script = document.createElement("script");
-    script.src = `https://www.omdbapi.com/?t=${encodeURIComponent(movie)}&apikey=aa1237e2&callback=${cb}`;
+    script.src = `https://www.omdbapi.com/?t=${m}&apikey=aa1237e2&callback=${cb}`;
     document.body.appendChild(script);
   });
 
-  document.getElementById("movies").scrollIntoView({behavior:'smooth'});
+  document.getElementById("movies").scrollIntoView({behavior:"smooth"});
 }
 </script>
 
