@@ -6,8 +6,6 @@
 <title>Ravindra’s Living Light</title>
 
 <style>
-
-/* GLOBAL */
 body{
 margin:0;
 font-family:Arial;
@@ -74,7 +72,7 @@ text-align:center;
 padding:80px 20px;
 }
 
-/* SECTIONS */
+/* SECTION */
 .section{
 display:none;
 padding:20px;
@@ -102,7 +100,6 @@ color:black;
 padding:15px;
 border-radius:10px;
 }
-
 </style>
 </head>
 
@@ -125,6 +122,7 @@ border-radius:10px;
 <a onclick="showSection('opinion')">💬 Opinion</a>
 <a onclick="showSection('products')">🛍️ My Products</a>
 <a onclick="showSection('blog')">📝 Blog</a>
+<a onclick="showSection('maltin'); loadMaltinMovies()">⭐ Maltin Picks</a>
 
 <div class="search-box">
 <input type="text" id="searchInput" placeholder="Search movie">
@@ -140,7 +138,7 @@ border-radius:10px;
 <p>A tribute through stories, movies, and knowledge</p>
 </div>
 
-<!-- SEARCH RESULT -->
+<!-- SEARCH -->
 <div class="section" id="search">
 <h2>Search Results</h2>
 <div id="search-list"></div>
@@ -175,7 +173,6 @@ border-radius:10px;
 <h2>📝 Blog</h2>
 
 <div class="blog-grid">
-
 <div class="blog-card">
 <h3>Inception Review</h3>
 <p>A masterpiece of dreams and reality...</p>
@@ -190,8 +187,13 @@ border-radius:10px;
 <h3>Stay Strong</h3>
 <p>Life teaches us strength...</p>
 </div>
-
 </div>
+</div>
+
+<!-- MALTIN -->
+<div class="section" id="maltin">
+<h2>⭐ Leonard Maltin Recommendations</h2>
+<div id="maltin-list"></div>
 </div>
 
 <script>
@@ -207,7 +209,7 @@ document.getElementById(sectionId).style.display='block';
 window.scrollTo(0,100);
 }
 
-// SEARCH FUNCTION
+// SEARCH (MULTIPLE MOVIES)
 function searchMovie(){
 
 const movie=document.getElementById("searchInput").value.trim();
@@ -216,35 +218,71 @@ const container=document.getElementById("search-list");
 if(!movie) return;
 
 showSection('search');
-
 container.innerHTML="Loading...";
 
-const cb="search_"+Date.now();
+fetch(`https://www.omdbapi.com/?s=${movie}&apikey=aa1237e2`)
+.then(res=>res.json())
+.then(data=>{
 
-window[cb]=function(data){
+if(data.Response==="True"){
+container.innerHTML="";
 
-if(data && data.Response==="True"){
-container.innerHTML=`
+data.Search.forEach(item=>{
+container.innerHTML+=`
 <div class="card">
-<h3>${data.Title}</h3>
-<p><strong>IMDb:</strong> ${data.imdbRating}</p>
-<p>${data.Plot}</p>
+<h3>${item.Title}</h3>
+<p>${item.Year}</p>
 </div>`;
+});
+
 }else{
-container.innerHTML="Movie not found ❌";
+container.innerHTML="No movies found ❌";
 }
 
-};
+});
 
-const script=document.createElement("script");
-script.src=`https://www.omdbapi.com/?t=${movie}&apikey=aa1237e2&callback=${cb}`;
-document.body.appendChild(script);
 }
 
 // CLEAR SEARCH
 function clearSearch(){
 document.getElementById("searchInput").value="";
 document.getElementById("search-list").innerHTML="";
+}
+
+// MALTIN MOVIES
+function loadMaltinMovies(){
+
+const container=document.getElementById("maltin-list");
+
+const movies=[
+"Inception",
+"Casablanca",
+"The Godfather",
+"Citizen Kane",
+"Pulp Fiction"
+];
+
+container.innerHTML="";
+
+movies.forEach(movie=>{
+
+fetch(`https://www.omdbapi.com/?t=${movie}&apikey=aa1237e2`)
+.then(res=>res.json())
+.then(data=>{
+
+if(data.Response==="True"){
+container.innerHTML+=`
+<div class="card">
+<h3>${data.Title}</h3>
+<p><strong>IMDb:</strong> ${data.imdbRating}</p>
+<p>${data.Plot}</p>
+</div>`;
+}
+
+});
+
+});
+
 }
 
 </script>
