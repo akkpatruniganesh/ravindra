@@ -3,101 +3,100 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Ravindra’s Living Light</title>
 
 <style>
-body {
-  margin:0;
-  font-family: Arial;
-  background: linear-gradient(135deg,#667eea,#764ba2);
+
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#667eea,#764ba2);
 }
 
-/* Header */
-.header {
-  padding:15px;
-  background: linear-gradient(90deg,#ff7e5f,#feb47b);
-  color:white;
-  font-size:24px;
-  font-weight:bold;
+/* header */
+.header{
+padding:15px;
+background:linear-gradient(90deg,#ff7e5f,#feb47b);
+color:white;
+font-size:24px;
+font-weight:bold;
 }
 
-/* Navbar */
-.navbar {
-  display:flex;
-  align-items:center;
-  padding:10px;
-  background:#185a9d;
+/* navbar */
+.navbar{
+display:flex;
+align-items:center;
+padding:10px;
+background:#1e5a96;
 }
 
-.navbar a {
-  color:white;
-  margin-right:20px;
-  text-decoration:none;
-  font-weight:bold;
+.navbar a{
+color:white;
+margin-right:20px;
+text-decoration:none;
+font-weight:bold;
+cursor:pointer;
 }
 
-/* Dropdown */
-.dropdown { position:relative; }
+/* dropdown */
+.dropdown{position:relative;}
 
-.dropdown-content {
-  display:none;
-  position:absolute;
-  background:white;
+.dropdown-content{
+display:none;
+position:absolute;
+background:white;
 }
 
-.dropdown-content a {
-  display:block;
-  padding:10px;
-  color:black;
+.dropdown-content a{
+display:block;
+padding:10px;
+color:black;
 }
 
-.dropdown:hover .dropdown-content {
-  display:block;
+.dropdown:hover .dropdown-content{
+display:block;
 }
 
-/* Search */
-.search-box {
-  margin-left:auto;
+/* search */
+.search-box{
+margin-left:auto;
 }
 
 .search-box input,
-.search-box button {
-  padding:6px;
+.search-box button{
+padding:6px;
 }
 
-/* Sections */
-.section {
-  padding:20px;
-  color:white;
+/* sections */
+.section{
+display:none;
+padding:20px;
+color:white;
 }
 
-/* Cards */
-.card {
-  background:white;
-  color:black;
-  padding:15px;
-  border-radius:10px;
-  margin-top:10px;
+/* cards */
+.card{
+background:white;
+color:black;
+padding:15px;
+border-radius:10px;
+margin-top:10px;
 }
 
-/* Blog Grid */
-.blog-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
+/* blog layout */
+.blog-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
 }
 
-.blog-card {
-  background:white;
-  color:black;
-  padding:15px;
-  border-radius:10px;
+.blog-card{
+background:white;
+color:black;
+padding:15px;
+border-radius:10px;
 }
 
-.blog-card a {
-  font-weight:bold;
-}
 </style>
 </head>
 
@@ -106,68 +105,91 @@ body {
 <div class="header">Ravindra’s Living Light</div>
 
 <div class="navbar">
-  <div class="dropdown">
-    <a href="#">🎬 Movies ▼</a>
-    <div class="dropdown-content">
-      <a href="#">English</a>
-      <a href="#">Hindi</a>
-      <a href="#">Telugu</a>
-    </div>
-  </div>
 
-  <a href="#books">📚 Books</a>
-  <a href="#opinion">💬 Opinion</a>
-  <a href="#products">🛍️ My Products</a>
-  <a href="#blog">📝 Blog</a>
-
-  <div class="search-box">
-    <input type="text" placeholder="Search movie">
-    <button>Search</button>
-    <button>Clear</button>
-  </div>
+<div class="dropdown">
+<a onclick="showSection('movies')">🎬 Movies ▼</a>
+<div class="dropdown-content">
+<a onclick="showSection('movies')">English</a>
+<a onclick="showSection('movies')">Hindi</a>
+<a onclick="showSection('movies')">Telugu</a>
+</div>
 </div>
 
-<!-- Books -->
+<a onclick="showSection('books')">📚 Books</a>
+<a onclick="showSection('opinion')">💬 Opinion</a>
+<a onclick="showSection('products')">🛍️ My Products</a>
+<a onclick="showSection('blog')">📝 Blog</a>
+
+<div class="search-box">
+<input type="text" placeholder="Search movie">
+<button>Search</button>
+<button>Clear</button>
+</div>
+
+</div>
+
+<!-- MOVIES -->
+<div class="section" id="movies">
+<h2>Movies</h2>
+<div class="card">Movie list will appear here.</div>
+</div>
+
+<!-- BOOKS -->
 <div class="section" id="books">
-  <h2>Books</h2>
-  <div class="card">The Alchemist</div>
+<h2>Books</h2>
+<div class="card">The Alchemist</div>
 </div>
 
-<!-- Opinion -->
+<!-- OPINION -->
 <div class="section" id="opinion">
-  <h2>Opinion</h2>
-  <div class="card">Share your thoughts...</div>
+<h2>Opinion</h2>
+<div class="card">Share your thoughts...</div>
 </div>
 
-<!-- Products -->
+<!-- PRODUCTS -->
 <div class="section" id="products">
-  <h2>My Products</h2>
-  <div class="card">Coming soon...</div>
+<h2>My Products</h2>
+<div class="card">Coming soon...</div>
 </div>
 
-<!-- Blog -->
+<!-- BLOG -->
 <div class="section" id="blog">
-  <h2>📝 Blog</h2>
+<h2>📝 Blog</h2>
 
-  <div class="blog-grid">
+<div class="blog-grid">
 
-    <div class="blog-card">
-      <h3><a href="blog/inception.html">Inception Review</a></h3>
-      <p>A masterpiece of dreams and reality...</p>
-    </div>
-
-    <div class="blog-card">
-      <h3><a href="blog/alchemist.html">The Alchemist</a></h3>
-      <p>A story about following your dreams...</p>
-    </div>
-
-    <div class="blog-card">
-      <h3><a href="blog/motivation.html">Stay Strong</a></h3>
-      <p>Life teaches us strength...</p>
-    </div>
-
-  </div>
+<div class="blog-card">
+<h3>Inception Review</h3>
+<p>A masterpiece of dreams and reality...</p>
 </div>
+
+<div class="blog-card">
+<h3>The Alchemist</h3>
+<p>A story about following your dreams...</p>
+</div>
+
+<div class="blog-card">
+<h3>Stay Strong</h3>
+<p>Life teaches us strength...</p>
+</div>
+
+</div>
+</div>
+
+<script>
+
+function showSection(sectionId){
+
+const sections=document.querySelectorAll('.section');
+sections.forEach(sec=>sec.style.display='none');
+
+document.getElementById(sectionId).style.display='block';
+
+window.scrollTo(0,120);
+
+}
+
+</script>
 
 </body>
 </html>
