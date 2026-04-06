@@ -88,20 +88,23 @@ margin-top:10px;
 }
 
 /* BLOG */
-.blog-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-}
+<!-- BLOG -->
+<div class="section" id="blog">
+<h2>📝 Blog</h2>
 
-.blog-card{
-background:white;
-color:black;
-padding:15px;
-border-radius:10px;
-}
-</style>
-</head>
+<!-- Categories -->
+<div style="margin-bottom:20px;">
+<button onclick="loadBlog('motivation')">💡 Motivational</button>
+<button onclick="loadBlog('books')">📚 Book Reviews</button>
+<button onclick="loadBlog('movies')">🎬 Movie Reviews</button>
+<button onclick="loadBlog('ott')">📺 OTT Reviews</button>
+<button onclick="loadBlog('travel')">✈️ Travel</button>
+</div>
+
+<!-- Blog Content -->
+<div id="blog-content" class="blog-grid"></div>
+
+</div>
 
 <body>
 
