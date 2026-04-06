@@ -13,7 +13,6 @@ background:linear-gradient(135deg,#667eea,#764ba2);
 color:white;
 }
 
-/* HEADER */
 .header{
 padding:15px;
 background:linear-gradient(90deg,#ff7e5f,#feb47b);
@@ -21,7 +20,6 @@ font-size:24px;
 font-weight:bold;
 }
 
-/* NAVBAR */
 .navbar{
 display:flex;
 align-items:center;
@@ -37,7 +35,6 @@ font-weight:bold;
 cursor:pointer;
 }
 
-/* DROPDOWN */
 .dropdown{position:relative;}
 
 .dropdown-content{
@@ -56,7 +53,6 @@ color:black;
 display:block;
 }
 
-/* SEARCH */
 .search-box{
 margin-left:auto;
 }
@@ -66,19 +62,16 @@ margin-left:auto;
 padding:6px;
 }
 
-/* HERO */
 .hero{
 text-align:center;
 padding:80px 20px;
 }
 
-/* SECTION */
 .section{
 display:none;
 padding:20px;
 }
 
-/* CARD */
 .card{
 background:white;
 color:black;
@@ -87,24 +80,20 @@ border-radius:10px;
 margin-top:10px;
 }
 
-/* BLOG */
-<!-- BLOG -->
-<div class="section" id="blog">
-<h2>📝 Blog</h2>
+.blog-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
 
-<!-- Categories -->
-<div style="margin-bottom:20px;">
-<button onclick="loadBlog('motivation')">💡 Motivational</button>
-<button onclick="loadBlog('books')">📚 Book Reviews</button>
-<button onclick="loadBlog('movies')">🎬 Movie Reviews</button>
-<button onclick="loadBlog('ott')">📺 OTT Reviews</button>
-<button onclick="loadBlog('travel')">✈️ Travel</button>
-</div>
-
-<!-- Blog Content -->
-<div id="blog-content" class="blog-grid"></div>
-
-</div>
+.blog-card{
+background:white;
+color:black;
+padding:15px;
+border-radius:10px;
+}
+</style>
+</head>
 
 <body>
 
@@ -171,26 +160,19 @@ margin-top:10px;
 <div class="card">Coming soon...</div>
 </div>
 
-<!-- BLOG -->
+<!-- BLOG (UPDATED) -->
 <div class="section" id="blog">
 <h2>📝 Blog</h2>
 
-<div class="blog-grid">
-<div class="blog-card">
-<h3>Inception Review</h3>
-<p>A masterpiece of dreams and reality...</p>
+<div style="margin-bottom:20px;">
+<button onclick="loadBlog('motivation')">💡 Motivational</button>
+<button onclick="loadBlog('books')">📚 Book Reviews</button>
+<button onclick="loadBlog('movies')">🎬 Movie Reviews</button>
+<button onclick="loadBlog('ott')">📺 OTT Reviews</button>
+<button onclick="loadBlog('travel')">✈️ Travel</button>
 </div>
 
-<div class="blog-card">
-<h3>The Alchemist</h3>
-<p>A story about following your dreams...</p>
-</div>
-
-<div class="blog-card">
-<h3>Stay Strong</h3>
-<p>Life teaches us strength...</p>
-</div>
-</div>
+<div id="blog-content" class="blog-grid"></div>
 </div>
 
 <!-- MALTIN -->
@@ -212,9 +194,8 @@ document.getElementById(sectionId).style.display='block';
 window.scrollTo(0,100);
 }
 
-// SEARCH (MULTIPLE MOVIES)
+// SEARCH
 function searchMovie(){
-
 const movie=document.getElementById("searchInput").value.trim();
 const container=document.getElementById("search-list");
 
@@ -226,10 +207,8 @@ container.innerHTML="Loading...";
 fetch(`https://www.omdbapi.com/?s=${movie}&apikey=aa1237e2`)
 .then(res=>res.json())
 .then(data=>{
-
 if(data.Response==="True"){
 container.innerHTML="";
-
 data.Search.forEach(item=>{
 container.innerHTML+=`
 <div class="card">
@@ -237,42 +216,29 @@ container.innerHTML+=`
 <p>${item.Year}</p>
 </div>`;
 });
-
 }else{
 container.innerHTML="No movies found ❌";
 }
-
 });
-
 }
 
-// CLEAR SEARCH
 function clearSearch(){
 document.getElementById("searchInput").value="";
 document.getElementById("search-list").innerHTML="";
 }
 
-// MALTIN MOVIES
+// MALTIN
 function loadMaltinMovies(){
-
 const container=document.getElementById("maltin-list");
 
-const movies=[
-"Inception",
-"Casablanca",
-"The Godfather",
-"Citizen Kane",
-"Pulp Fiction"
-];
+const movies=["Inception","Casablanca","The Godfather","Citizen Kane","Pulp Fiction"];
 
 container.innerHTML="";
 
 movies.forEach(movie=>{
-
 fetch(`https://www.omdbapi.com/?t=${movie}&apikey=aa1237e2`)
 .then(res=>res.json())
 .then(data=>{
-
 if(data.Response==="True"){
 container.innerHTML+=`
 <div class="card">
@@ -281,11 +247,41 @@ container.innerHTML+=`
 <p>${data.Plot}</p>
 </div>`;
 }
-
 });
-
 });
+}
 
+// BLOG (NEW)
+const blogData = {
+  motivation:[
+    {title:"Stay Strong",content:"Life teaches strength through struggles."},
+    {title:"Never Give Up",content:"Every failure is a lesson."}
+  ],
+  books:[
+    {title:"The Alchemist Review",content:"A journey of dreams and destiny."}
+  ],
+  movies:[
+    {title:"Inception Review",content:"A masterpiece of dreams and reality."}
+  ],
+  ott:[
+    {title:"Top Netflix Shows",content:"Best OTT content to binge watch."}
+  ],
+  travel:[
+    {title:"My Travel Story",content:"Exploring new places and cultures."}
+  ]
+};
+
+function loadBlog(category){
+const container=document.getElementById("blog-content");
+container.innerHTML="";
+
+blogData[category].forEach(post=>{
+container.innerHTML+=`
+<div class="blog-card">
+<h3>${post.title}</h3>
+<p>${post.content}</p>
+</div>`;
+});
 }
 
 </script>
